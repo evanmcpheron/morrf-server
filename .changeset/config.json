@@ -1,6 +1,0 @@
-{
-  "changelog": ["@changesets/cli/changelog", { "repo": "evanmcpheron/morrf-server" }],
-  "commit": false,
-  "access": "public",
-  "baseBranch": "main"
-}
