@@ -1,8 +1,10 @@
 name: Version & GitHub Release
 
 on:
-  push:
-    branches: [main]
+  workflow_run:
+    workflows: ['Version & Tag']
+    types:
+      - completed
 
 jobs:
   release:
