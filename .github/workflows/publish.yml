@@ -1,0 +1,38 @@
+name: Version & Tag
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  version:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Type check
+        run: npx tsc --noEmit
+
+      - name: Apply version bump
+        run: npx changeset version
+
+      - name: Commit version bump
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore(release): bump version'
+
+      - name: Create Git tag
+        run: |
+          version=$(node -p "require('./package.json').version")
+          git tag v$version
+          git push origin v$version
